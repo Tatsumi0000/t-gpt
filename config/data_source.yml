@@ -1,0 +1,7 @@
+data_source:
+  confluence:
+    android:
+      label:
+        - android
+        - fuga
+    

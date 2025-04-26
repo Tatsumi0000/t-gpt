@@ -1,4 +1,3 @@
-import os
 from os.path import dirname, join
 
 from dotenv import load_dotenv
@@ -11,6 +10,8 @@ from llama_index.core import (
 )
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
 from llama_index.llms.google_genai import GoogleGenAI
+
+from ..confluence.LoadConfluenceDocument import LoadConfluenceDocument
 
 
 class CreateGeminiIndex(object):
@@ -56,11 +57,10 @@ class CreateGeminiIndex(object):
 
         indexの再生成はコストがかかるので生成後は保存する
         """
-        documents = SimpleDirectoryReader(
-            join(self.current_dirname, "data")
-        ).load_data()
+        load_confluence_document = LoadConfluenceDocument()
+        documents = load_confluence_document.load_data()
         index = GPTVectorStoreIndex.from_documents(documents)
-        save_dir = join(self.current_dirname, self.save_dir_name)
+        save_dir = join(self.current_dirname, self.save_index_dir_name)
         index.storage_context.persist(save_dir)
 
     def ask_question(self, question: str):
@@ -82,6 +82,6 @@ class CreateGeminiIndex(object):
 if __name__ == "__main__":
     print("start!!!")
     create_gemini_index = CreateGeminiIndex()
-    # create_gemini_index.create_and_save_index()
-    question = "主人公は誰ですか？"
+    create_gemini_index.create_and_save_index()
+    question = "何のAndroidアプリを作っていますか?"
     create_gemini_index.ask_question(question)
