@@ -82,6 +82,6 @@ class CreateGeminiIndex(object):
 if __name__ == "__main__":
     print("start!!!")
     create_gemini_index = CreateGeminiIndex()
-    create_gemini_index.create_and_save_index()
-    question = "何のAndroidアプリを作っていますか?"
+    # create_gemini_index.create_and_save_index()
+    question = "アーキテクチャは何ですか？"
     create_gemini_index.ask_question(question)

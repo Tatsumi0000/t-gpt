@@ -18,7 +18,6 @@ class LoadConfluenceDocument(object):
     def __init__(self, label: str = "android") -> None:
         """コンストラクタ
         Parameters:
-            space_key(str): ドキュメントが存在するスペースのキー
             label(str): 収集したいドキュメントに付与されているlabel
         """
         self.label = label
@@ -47,10 +46,10 @@ class LoadConfluenceDocument(object):
             List[Document]: 条件にマッチしたConfluenceのドキュメントをListで返す
         """
         cql = f'type="page" AND label="{self.label}"'
-        return self.reader.load_data(label=self.label)
+        return self.reader.load_data(cql=cql)
 
 
 if __name__ == "__main__":
     load = LoadConfluenceDocument()
     docs = load.load_data()
-    print(docs)                        
+    print(docs)
