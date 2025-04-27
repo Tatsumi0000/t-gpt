@@ -1,0 +1,6 @@
+# dataset.ymlで定義したデータ区分をどこのデータソースから取得するかを定義
+android:
+  confluence:
+    - android
+    - fuga
+
