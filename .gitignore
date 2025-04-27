@@ -2,7 +2,7 @@
 *.DS_Store
 .env
 
-**/index_data/*
+**/*_index_data/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
