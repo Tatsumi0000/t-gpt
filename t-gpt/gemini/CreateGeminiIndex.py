@@ -1,4 +1,4 @@
-from os.path import dirname, join
+from os.path import join
 
 from dotenv import load_dotenv
 from llama_index.core import (
@@ -11,15 +11,15 @@ from llama_index.core import (
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
 from llama_index.llms.google_genai import GoogleGenAI
 
+from ..base.Base import Base, is_development
 from ..confluence.LoadConfluenceDocument import LoadConfluenceDocument
 
 
-class CreateGeminiIndex(object):
+class CreateGeminiIndex(Base):
     """文書をGeminiのLLMで使うためにベクトル化するクラス
     Attributes:
         llm_model(str): LLMの使用モデル
         embed_model(str): 文書のベクトル化(embed)に使うモデル名
-        current_dirname(str): このファイルのディレクトリパス
         save_index_dir_name(str): 作成したindexを保存するディレクトリ名
     """
 
@@ -35,17 +35,11 @@ class CreateGeminiIndex(object):
             embed_model(str): 文書のベクトル化(embed)に使うモデル名
             save_index_dir_name(str): 作成したindexを保存するディレクトリ名
         """
-        self.current_dirname = dirname(__file__)
+        super().__init__(__file__)
         self.llm_model = llm_model
         self.embed_model = embed_model
         self.save_index_dir_name = join(self.current_dirname, save_index_dir_name)
-        self.setup_env()
         self.setup_gemini()
-
-    def setup_env(self) -> None:
-        """環境変数をセットアップする"""
-        dotenv_path = join(self.current_dirname, "../../.env")
-        load_dotenv(dotenv_path)
 
     def setup_gemini(self) -> None:
         """使用するGeminiのモデルを設定する"""
@@ -85,3 +79,5 @@ if __name__ == "__main__":
     # create_gemini_index.create_and_save_index()
     question = "アーキテクチャは何ですか？"
     create_gemini_index.ask_question(question)
+    print("======")
+    print(is_development())

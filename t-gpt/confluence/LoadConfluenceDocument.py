@@ -6,12 +6,13 @@ from dotenv import load_dotenv
 from llama_index.core.readers import Document
 from llama_index.readers.confluence import ConfluenceReader
 
+from ..base.Base import Base
 
-class LoadConfluenceDocument(object):
+
+class LoadConfluenceDocument(Base):
     """Confluenceからドキュメントを読み込む
     Attributes:
         label(str): 収集したいドキュメントに付与されているlabel
-        current_dirname(str): 実行しているドキュメントのパス
         reader(ConfluenceReader): ConfluenceReaderのインスタンス
     """
 
@@ -20,18 +21,9 @@ class LoadConfluenceDocument(object):
         Parameters:
             label(str): 収集したいドキュメントに付与されているlabel
         """
+        super().__init__(__file__)
         self.label = label
-        self.current_dirname = dirname(__file__)
-        self.setup_env()
         self.create_reader()
-
-    def setup_env(self) -> None:
-        """環境変数をセットアップする
-
-        環境変数で[CONFLUENCE_API_TOKEN]をセットしているのでライブラリが自動で認証設定を済ませる
-        """
-        dotenv_path = join(self.current_dirname, "../../.env")
-        load_dotenv(dotenv_path)
 
     def create_reader(self) -> None:
         """ConfluenceReaderのインスタンスを生成"""
