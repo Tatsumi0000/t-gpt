@@ -1,8 +1,6 @@
 import os
-from os.path import dirname, join
 from typing import List
 
-from dotenv import load_dotenv
 from llama_index.core.readers import Document
 from llama_index.readers.confluence import ConfluenceReader
 
@@ -16,9 +14,9 @@ class LoadConfluenceDocument(Base):
         reader(ConfluenceReader): ConfluenceReaderのインスタンス
     """
 
-    def __init__(self, label: str = "android") -> None:
+    def __init__(self, label: str) -> None:
         """コンストラクタ
-        Parameters:
+        Args:
             label(str): 収集したいドキュメントに付与されているlabel
         """
         super().__init__(__file__)
@@ -34,7 +32,7 @@ class LoadConfluenceDocument(Base):
     def load_data(self) -> List[Document]:
         """Confluenceから読み込んだドキュメント
 
-        Returns
+        Returns:
             List[Document]: 条件にマッチしたConfluenceのドキュメントをListで返す
         """
         cql = f'type="page" AND label="{self.label}"'
@@ -42,6 +40,6 @@ class LoadConfluenceDocument(Base):
 
 
 if __name__ == "__main__":
-    load = LoadConfluenceDocument()
+    load = LoadConfluenceDocument('android')
     docs = load.load_data()
     print(docs)
