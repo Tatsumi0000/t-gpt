@@ -1,1 +1,5 @@
 ## t-gpt
+
+llamaindexを使って外部ファイルをindexとして保存しその情報を元にLLM(Gemini)に質問&回答をもらうシステムです。
+現時点ではConfluenceにのみ対応しています。
+GPTVectorStoreIndexを使ってファイルベースでindex化を行います。

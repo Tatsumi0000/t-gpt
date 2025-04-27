@@ -49,7 +49,6 @@ class CreateGeminiIndex(Base):
         for dataset_name in self.dataset_yaml:
             # 各データソースから読み込んだドキュメントを保存する一時変数
             documents = []
-            print(self.datasource_yaml[dataset_name])
             for datasource_name, datasource_value in self.datasource_yaml[
                 dataset_name
             ].items():
@@ -82,6 +81,16 @@ class CreateGeminiIndex(Base):
 
         Returns:
             質問した内容に対する回答。
+            返り値の中のsource_nodes.metadataから参考にしたドキュメントのタイトル(title)とURL(url)を取得できる。
+            単純に返り値を出力した場合は回答内容が取れる
+
+        Examples:
+            >>> create_gemini_index = CreateGeminiIndex()
+            >>> question = "作っているアプリは何ですか？"
+            >>> answer = create_gemini_index.ask_question("android", question)
+            >>> print(answer) # LLMからの回答結果
+            >>> for ans in answer.source_nodes:
+            >>>     print(f'{ans.metadata["title"]}: {ans.metadata["url"]}')
 
         """
         storage_context = StorageContext.from_defaults(
