@@ -9,7 +9,8 @@ class Base(object):
     """各クラスで継承するための元クラス
 
     RailsみたいにRails.env.production的なことをしたいので親クラスで読み込んで使い回す
-    それ以外は基本的に実装しない
+    yamlやenvファイルで設定した項目を各クラスで使うので実装している
+    それ以外は基本的に実装しない（肥大化すると管理が大変だから）
 
     Attributes:
         current_dir(str): 各コードのディレクトリ

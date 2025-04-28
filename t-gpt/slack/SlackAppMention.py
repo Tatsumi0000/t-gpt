@@ -61,7 +61,7 @@ class SlackAppMention(Base):
 
         Returns:
             Slack形式のアンカーを箇条書きのblockで返す
-            Slack形式のアンカー = <title|url>
+            Slack形式のアンカー = <url|title>
         """
         anchors = []
         for ref in refs:
