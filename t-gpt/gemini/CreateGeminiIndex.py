@@ -57,7 +57,7 @@ class CreateGeminiIndex(Base):
                     for label in datasource_value:
                         load_confluence_document = LoadConfluenceDocument(label)
                         # 一括でindex化したいので一時変数に追加
-                        documents = documents + load_confluence_document.load_data()
+                        documents.extend(load_confluence_document.load_data())
                 # if datasource_name == "hogehoge" ここで他のデータソースが増えたら分岐を追加する
             # データセットに対するデータソースを全部探索したらindex化
             index = GPTVectorStoreIndex.from_documents(documents)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     print("start!!!")
     create_gemini_index = CreateGeminiIndex()
     create_gemini_index.create_and_save_index()
-    question = "作っているアプリは何ですか？"
+    question = "誰がアプリを作っていますか?"
 
     answer = create_gemini_index.ask_question("android", question)
     print(answer)
