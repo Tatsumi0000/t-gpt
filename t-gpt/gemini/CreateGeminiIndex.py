@@ -1,5 +1,6 @@
 from os.path import join
 
+from .GeminiBase import GeminiBase
 from llama_index.core import (
     GPTVectorStoreIndex,
     Settings,
@@ -10,11 +11,11 @@ from llama_index.core.base.response.schema import RESPONSE_TYPE
 from llama_index.embeddings.google_genai import GoogleGenAIEmbedding
 from llama_index.llms.google_genai import GoogleGenAI
 
-from ..base.Base import Base, is_development, is_production
+from ..base.Base import is_development, is_production
 from ..document_reader.LoadConfluenceDocument import LoadConfluenceDocument
 
 
-class CreateGeminiIndex(Base):
+class CreateGeminiIndex(GeminiBase):
     """文書をGeminiのLLMで使うためにベクトル化するクラス。
 
     Attributes:
@@ -63,9 +64,7 @@ class CreateGeminiIndex(Base):
             # データセットに対するデータソースを全部探索したらindex化
             index = GPTVectorStoreIndex.from_documents(documents)
             if is_development:
-                save_dir = join(
-                    self.current_dirname, self.save_index_file_dir_path(dataset_name)
-                )
+                save_dir = self.save_index_file_dir_path(dataset_name)
                 index.storage_context.persist(save_dir)
             elif is_production:
                 pass
@@ -101,42 +100,15 @@ class CreateGeminiIndex(Base):
         query_engine = index.as_query_engine()
         return query_engine.query(question)
 
-    def save_index_file_dir_path(self, dataset_name: str) -> str:
-        """index化したデータを保存するディレクトリパスを生成。
-
-        ${dataset_name}_index_data というディレクトリ名で保存する。
-
-        Args:
-            dataset_name(str): データセット名
-
-        Returns:
-            パス形式で返す
-        """
-        dir_name = self.save_index_file_dir_name(dataset_name)
-        return f"{join(self.current_dirname, dir_name)}"
-
-    def save_index_file_dir_name(self, dataset_name: str) -> str:
-        """index化したデータを保存するディレクトリ名を生成。
-
-        ${dataset_name}_index_data というディレクトリ名にする。
-
-        Args:
-            dataset_name(str): データセット名
-
-        Returns:
-            ${dataset_name}_index_data という形式で返す
-        """
-        return f"{dataset_name}_index_data"
-
 
 if __name__ == "__main__":
     print("start!!!")
     create_gemini_index = CreateGeminiIndex()
     create_gemini_index.create_and_save_index()
-    # question = "誰がアプリを作っていますか?"
-    #
-    # answer = create_gemini_index.ask_question("android", question)
-    # print(answer)
-    # for ans in answer.source_nodes:
-    #     print("---------")
-    #     print(f'{ans.metadata["title"]}: {ans.metadata["url"]}')
+    question = "誰がアプリを作っていますか?"
+
+    answer = create_gemini_index.ask_question("android", question)
+    print(answer)
+    for ans in answer.source_nodes:
+        print("---------")
+        print(f'{ans.metadata["title"]}: {ans.metadata["url"]}')
