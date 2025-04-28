@@ -43,7 +43,7 @@ class AskGemini(GeminiBase):
         query_engine = index.as_query_engine()
         return query_engine.query(question)
 
-    def create_prompt(self):
+    def prompt_tuning(self):
         """Geminiに問い合わせるためのプロンプトをカスタマイズ
 
         TODO: 後でいい感じにプロンプトをチューニングしてあげる
