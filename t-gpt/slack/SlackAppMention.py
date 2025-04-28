@@ -74,7 +74,6 @@ class SlackAppMention(Base):
     def help_message(self) -> tuple[str, dict, dict]:
         """helpコマンドが返ってきた時にメッセージを返す
 
-
         Returns:
             タプル形式で返す。
             messageはそのままblock kitのtextにセットすることを想定
@@ -107,6 +106,17 @@ class SlackAppMention(Base):
             },
         )
 
+    def contains_dataset_name(self, dataset_name: str) -> bool:
+        """Slackから指定されたデータセット名が対応しているかどうかを返す
+
+        Attributes:
+            dataset_name(str): Slackから受け取ったデータセット名
+
+        Returns:
+            dataset.ymlにSlackから指定されたデータセット名が定義されているか。対応していたらTrue
+        """
+        return dataset_name in self.dataset_yaml
+
     def ping_message(self) -> str:
         """pingコマンド時に返すメッセージ
 
@@ -115,25 +125,25 @@ class SlackAppMention(Base):
         """
         return f"<@{self.user}> ping pong!🏓"
 
-    def fotter_message(self) -> tuple[dict, dict]:
+    def footer_message(self) -> List[dict]:
         """メッセージの最後にいれるフッターを返す
-
 
         Returns:
             タプル形式で返す。最初に区切り線で、最後にメッセージ
         """
-        return (
+        url = "https://github.com/Tatsumi0000/t-gpt/"
+        return [
             {"type": "divider"},
             {
                 "type": "context",
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "powerd by t-gpt",
+                        "text": f"powered by <{url}|t-gpt>",
                     }
                 ],
             },
-        )
+        ]
 
 
 if __name__ == "__main__":
