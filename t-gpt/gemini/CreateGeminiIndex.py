@@ -132,10 +132,10 @@ if __name__ == "__main__":
     print("start!!!")
     create_gemini_index = CreateGeminiIndex()
     create_gemini_index.create_and_save_index()
-    question = "誰がアプリを作っていますか?"
-
-    answer = create_gemini_index.ask_question("android", question)
-    print(answer)
-    for ans in answer.source_nodes:
-        print("---------")
-        print(f'{ans.metadata["title"]}: {ans.metadata["url"]}')
+    # question = "誰がアプリを作っていますか?"
+    #
+    # answer = create_gemini_index.ask_question("android", question)
+    # print(answer)
+    # for ans in answer.source_nodes:
+    #     print("---------")
+    #     print(f'{ans.metadata["title"]}: {ans.metadata["url"]}')

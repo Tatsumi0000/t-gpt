@@ -8,7 +8,19 @@ SlackのHTTPモードで動作します。
 Socketモードでの動作させたい場合は、`./t-gpt/slack/event_handler.py`を編集してください。
 
 ## 開発
+Dockerを使って開発しています。
 
+### indexファイルの生成
+
+indexファイルを事前に作るために以下のコマンドを実行してください。
+
+```sh
+make dev/setup
+make dev/run
+poetry run python -m t-gpt.gemini.CreateGeminiIndex
+```
+
+### Slackの設定
 Slackの開発設定で
 - `OAuth & Permissions`で`chat.write`権限を付与してください。これがないとSlackに投稿できません。
 - `Subscribe to bot events`で`app_mention`権限を付与してください。これがないとメンションをもらっても反応できません。
@@ -20,6 +32,10 @@ brew install ngrok
 docker run -it --rm -p 8080:8080 -v $(PWD):/app t-gpt  /bin/bash -c "poetry run python -m t-gpt.slack.event_handler"
 ngrok http http://localhost:8080
 ```
+
+起動後はSlackの管理画面にある`Event Subscriptions`の`Request URL`にURLを指定します。
+正しく起動できていれば`Verified`になります。
+
 
 ### env
 環境変数をセットする。
