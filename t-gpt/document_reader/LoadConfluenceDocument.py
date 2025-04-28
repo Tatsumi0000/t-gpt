@@ -9,6 +9,7 @@ from ..base.Base import Base
 
 class LoadConfluenceDocument(Base):
     """Confluenceからドキュメントを読み込む
+
     Attributes:
         label(str): 収集したいドキュメントに付与されているlabel
         reader(ConfluenceReader): ConfluenceReaderのインスタンス
@@ -16,6 +17,7 @@ class LoadConfluenceDocument(Base):
 
     def __init__(self, label: str) -> None:
         """コンストラクタ
+
         Args:
             label(str): 収集したいドキュメントに付与されているlabel
         """

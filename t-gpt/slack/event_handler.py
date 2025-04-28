@@ -7,6 +7,7 @@ from ..slack.SlackAppMention import SlackAppMention
 
 """Slackから返ってきたイベントに対して色々反応する関数たち
 """
+
 slack_app_mention = SlackAppMention(__file__)
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
@@ -19,7 +20,7 @@ def handle_message_events(event, say):
     """メンションされたらこの関数が呼ばれる
 
     ユーザが指示したデータセットと質問内容を判断し、
-    適切なindexを使ってGeminiに問い合わせ後Slackの質問してきたスレに返答
+    適切なindexを使ってGeminiに問い合わせた後、Slackの質問してきたスレに返答
     """
     slack_app_mention.initialize(event)
     # 改行コードで分割する。最初にほしいデータセットが入っていることを期待

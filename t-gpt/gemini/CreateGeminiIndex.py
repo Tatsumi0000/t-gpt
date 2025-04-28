@@ -105,7 +105,7 @@ class CreateGeminiIndex(Base):
 
         ${dataset_name}_index_data というディレクトリ名にする
 
-        Parameters:
+        Args:
             dataset_name(str): データセット名
 
         Returns:
@@ -119,7 +119,7 @@ class CreateGeminiIndex(Base):
 
         ${dataset_name}_index_data というディレクトリ名にする
 
-        Parameters:
+        Args:
             dataset_name(str): データセット名
 
         Returns:

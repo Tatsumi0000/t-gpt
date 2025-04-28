@@ -20,16 +20,17 @@ class SlackAppMention(Base):
     def __init__(self, file) -> None:
         """コンストラクタ
 
-        Attributes:
+        Args:
             file(str): 実行するファイルのパス
         """
         super().__init__(file)
 
     def initialize(self, event) -> None:
         """イニシャライザ
-        コンストラクタはslack_boltを使うために一度環境変数を読み込ませる。
-        イニシャライザでは、Slackからメンションされた時に呼び出される変数をセットする。
-        Attributes:
+        コンストラクタはslack_boltを使うために一度環境変数を読み込ませる
+        イニシャライザでは、Slackからメンションされた時に呼び出される変数をセットする
+
+        Args:
             event: Slackから返ってきたEvent。中に色々情報が詰まってる
         """
         self.event = event
@@ -45,7 +46,7 @@ class SlackAppMention(Base):
     def answer_message(self, answer: RESPONSE_TYPE) -> dict:
         """LLMから返ってきた回答をblock形式で返す
 
-        Parameters:
+        Args:
             answer(RESPONSE_TYPE): LLMから返ってきた回答
 
         Returns:
@@ -56,7 +57,7 @@ class SlackAppMention(Base):
     def reference_anchors(self, refs: List[NodeWithScore]) -> dict:
         """LLMから返ってきたレスポンスがどのドキュメントを参考にしたかをSlack形式のアンカーのListで返す
 
-        Parameters:
+        Args:
             refs(List[NodeWithScore]): LLMから返ってきた参考にしたmetadata一覧
 
         Returns:
@@ -109,7 +110,7 @@ class SlackAppMention(Base):
     def contains_dataset_name(self, dataset_name: str) -> bool:
         """Slackから指定されたデータセット名が対応しているかどうかを返す
 
-        Attributes:
+        Args:
             dataset_name(str): Slackから受け取ったデータセット名
 
         Returns:
