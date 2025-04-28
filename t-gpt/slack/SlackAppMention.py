@@ -27,11 +27,11 @@ class SlackAppMention(Base):
 
     def initialize(self, event) -> None:
         """イニシャライザ
-        コンストラクタはslack_boltを使うために一度環境変数を読み込ませる
-        イニシャライザでは、Slackからメンションされた時に呼び出される変数をセットする
+        コンストラクタはslack_boltを使うために一度環境変数を読み込ませる。
+        イニシャライザでは、Slackからメンションされた時に呼び出される変数をセットする。
 
         Args:
-            event: Slackから返ってきたEvent。中に色々情報が詰まってる
+            event: Slackから返ってきたEvent。中に色々情報が詰まってる。
         """
         self.event = event
         self.user = event.get("user")
@@ -40,11 +40,11 @@ class SlackAppMention(Base):
         self.text_without_mentions = self._text_without_mentions()
 
     def _text_without_mentions(self) -> str:
-        """ユーザが送ってきたメッセージからメンション部分を削ぎ落として返す"""
+        """ユーザが送ってきたメッセージからメンション部分を削ぎ落として返す。"""
         return re.sub(r"<@([A-Z0-9]+)>", "", self.text)
 
     def answer_message(self, answer: RESPONSE_TYPE) -> dict:
-        """LLMから返ってきた回答をblock形式で返す
+        """LLMから返ってきた回答をblock形式で返す。
 
         Args:
             answer(RESPONSE_TYPE): LLMから返ってきた回答
@@ -55,13 +55,14 @@ class SlackAppMention(Base):
         return {"type": "section", "text": {"type": "mrkdwn", "text": str(answer)}}
 
     def reference_anchors(self, refs: List[NodeWithScore]) -> dict:
-        """LLMから返ってきたレスポンスがどのドキュメントを参考にしたかをSlack形式のアンカーのListで返す
+        """LLMから返ってきたレスポンスがどのドキュメントを参考にしたかをSlack形式のアンカーのListで返す。
 
         Args:
             refs(List[NodeWithScore]): LLMから返ってきた参考にしたmetadata一覧
 
         Returns:
-            Slack形式のアンカーを箇条書きのblockで返す
+            Slack形式のアンカーを箇条書きのblockで返す。
+
             Slack形式のアンカー = <url|title>
         """
         anchors = []
@@ -73,12 +74,12 @@ class SlackAppMention(Base):
         return {"type": "section", "text": {"type": "mrkdwn", "text": anchor_text}}
 
     def help_message(self) -> tuple[str, dict, dict]:
-        """helpコマンドが返ってきた時にメッセージを返す
+        """helpコマンドが返ってきた時にメッセージを返す。
 
         Returns:
             タプル形式で返す。
-            messageはそのままblock kitのtextにセットすることを想定
-            それ以降のdictはblock kitにいれる想定
+            messageはそのままblock kitのtextにセットすることを想定。
+            それ以降のdictはblock kitにいれる想定。
 
         Examples:
             >>> say(
@@ -108,7 +109,7 @@ class SlackAppMention(Base):
         )
 
     def contains_dataset_name(self, dataset_name: str) -> bool:
-        """Slackから指定されたデータセット名が対応しているかどうかを返す
+        """Slackから指定されたデータセット名が対応しているかどうかを返す。
 
         Args:
             dataset_name(str): Slackから受け取ったデータセット名
@@ -119,7 +120,7 @@ class SlackAppMention(Base):
         return dataset_name in self.dataset_yaml
 
     def ping_message(self) -> str:
-        """pingコマンド時に返すメッセージ
+        """pingコマンド時に返すメッセージ。
 
         Returns:
             メンション付きで返す
@@ -127,7 +128,7 @@ class SlackAppMention(Base):
         return f"<@{self.user}> ping pong!🏓"
 
     def footer_message(self) -> List[dict]:
-        """メッセージの最後にいれるフッターを返す
+        """メッセージの最後にいれるフッターを返す。
 
         Returns:
             タプル形式で返す。最初に区切り線で、最後にメッセージ

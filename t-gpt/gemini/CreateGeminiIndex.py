@@ -15,7 +15,8 @@ from ..document_reader.LoadConfluenceDocument import LoadConfluenceDocument
 
 
 class CreateGeminiIndex(Base):
-    """文書をGeminiのLLMで使うためにベクトル化するクラス
+    """文書をGeminiのLLMで使うためにベクトル化するクラス。
+
     Attributes:
         llm_model(str): LLMの使用モデル
         embed_model(str): 文書のベクトル化(embed)に使うモデル名
@@ -42,9 +43,9 @@ class CreateGeminiIndex(Base):
         Settings.embed_model = GoogleGenAIEmbedding(model_name=self.embed_model)
 
     def create_and_save_index(self) -> None:
-        """LLMに渡すために文書のindex化&保存
+        """LLMに渡すために文書のindex化&保存。
 
-        indexの再生成はコストがかかるので生成後は保存する
+        indexの再生成はコストがかかるので生成後は保存する。
         """
         for dataset_name in self.dataset_yaml:
             # 各データソースから読み込んだドキュメントを保存する一時変数
@@ -72,8 +73,8 @@ class CreateGeminiIndex(Base):
     def ask_question(self, dataset_name: str, question: str) -> RESPONSE_TYPE:
         """質問をする
 
-        indexデータは再生成するのではなくすでに保存しているものを流用する
-        先に保存していないとエラーになる。検証に使う
+        indexデータは再生成するのではなくすでに保存しているものを流用する。
+        先に保存していないとエラーになる。検証に使う。
 
         Args:
             dataset_name(str): 質問したいデータセット名
@@ -82,7 +83,7 @@ class CreateGeminiIndex(Base):
         Returns:
             質問した内容に対する回答。
             返り値の中のsource_nodes.metadataから参考にしたドキュメントのタイトル(title)とURL(url)を取得できる。
-            単純に返り値を出力した場合は回答内容が取れる
+            単純に返り値を出力した場合は回答内容が取れる。
 
         Examples:
             >>> create_gemini_index = CreateGeminiIndex()
@@ -101,9 +102,9 @@ class CreateGeminiIndex(Base):
         return query_engine.query(question)
 
     def save_index_file_dir_path(self, dataset_name: str) -> str:
-        """index化したデータを保存するディレクトリパスを生成
+        """index化したデータを保存するディレクトリパスを生成。
 
-        ${dataset_name}_index_data というディレクトリ名にする
+        ${dataset_name}_index_data というディレクトリ名で保存する。
 
         Args:
             dataset_name(str): データセット名
@@ -115,9 +116,9 @@ class CreateGeminiIndex(Base):
         return f"{join(self.current_dirname, dir_name)}"
 
     def save_index_file_dir_name(self, dataset_name: str) -> str:
-        """index化したデータを保存するディレクトリ名を生成
+        """index化したデータを保存するディレクトリ名を生成。
 
-        ${dataset_name}_index_data というディレクトリ名にする
+        ${dataset_name}_index_data というディレクトリ名にする。
 
         Args:
             dataset_name(str): データセット名
