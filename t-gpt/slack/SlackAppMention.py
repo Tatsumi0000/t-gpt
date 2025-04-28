@@ -110,23 +110,30 @@ class SlackAppMention(Base):
     def ping_message(self) -> str:
         """pingコマンド時に返すメッセージ
 
-
         Returns:
             メンション付きで返す
         """
         return f"<@{self.user}> ping pong!🏓"
 
-    def fotter_message(self) -> dict:
-        """メッセージの最後にいれるフッターを返す"""
-        return {
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": "powerd by t-gpt",
-                }
-            ],
-        }
+    def fotter_message(self) -> tuple[dict, dict]:
+        """メッセージの最後にいれるフッターを返す
+
+
+        Returns:
+            タプル形式で返す。最初に区切り線で、最後にメッセージ
+        """
+        return (
+            {"type": "divider"},
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "powerd by t-gpt",
+                    }
+                ],
+            },
+        )
 
 
 if __name__ == "__main__":

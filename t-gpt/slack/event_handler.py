@@ -1,9 +1,8 @@
 import os
-import re
 
 from slack_bolt import App
 
-from ..base.Base import Base
+from ..gemini.CreateGeminiIndex import CreateGeminiIndex
 from ..slack.SlackAppMention import SlackAppMention
 
 """Slackから返ってきたイベントに対して色々反応する関数たち
@@ -48,10 +47,26 @@ def handle_message_events(event, say):
                 thread_ts=slack_app_mention.thread_ts,
             )
             return
-    say(
-        text="回答を生成中です。しばらくお待ちください。",
-        thread_ts=slack_app_mention.thread_ts,
-    )
+    elif len(lines) >= 2:
+        say(
+            text="回答を生成中です。しばらくお待ちください。",
+            thread_ts=slack_app_mention.thread_ts,
+        )
+        create_gemini_index = CreateGeminiIndex()
+        dataset_name = lines[0].strip()
+        # 質問を改行してくるかもしれないので結合してあげる。
+        question = "".join(lines[1:])
+        answer = create_gemini_index.ask_question(dataset_name, question)
+        say(
+            text=str(answer),
+            blocks=[
+                slack_app_mention.answer_message(answer),
+                slack_app_mention.reference_anchors(answer.source_nodes),
+                slack_app_mention.fotter_message()[0],
+                slack_app_mention.fotter_message()[1],
+            ],
+            thread_ts=slack_app_mention.thread_ts,
+        )
     if not slack_app_mention.text_without_mentions:
         print("メンションのみで空文字です。")
     else:
