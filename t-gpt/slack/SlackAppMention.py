@@ -1,6 +1,7 @@
 import re
 from typing import List
 
+from llama_index.core.base.response.schema import RESPONSE_TYPE
 from llama_index.core.schema import NodeWithScore
 
 from ..base.Base import Base
@@ -41,7 +42,18 @@ class SlackAppMention(Base):
         """ユーザが送ってきたメッセージからメンション部分を削ぎ落として返す"""
         return re.sub(r"<@([A-Z0-9]+)>", "", self.text)
 
-    def create_reference_anchors(self, refs: List[NodeWithScore]) -> dict:
+    def answer_message(self, answer: RESPONSE_TYPE) -> dict:
+        """LLMから返ってきた回答をblock形式で返す
+
+        Parameters:
+            answer(RESPONSE_TYPE): LLMから返ってきた回答
+
+        Returns:
+            Slackのblock形式に合わせた回答
+        """
+        return {"type": "section", "text": {"type": "mrkdwn", "text": str(answer)}}
+
+    def reference_anchors(self, refs: List[NodeWithScore]) -> dict:
         """LLMから返ってきたレスポンスがどのドキュメントを参考にしたかをSlack形式のアンカーのListで返す
 
         Parameters:
