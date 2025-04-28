@@ -55,7 +55,7 @@ class SlackAppMention(Base):
         for ref in refs:
             title = ref.metadata["title"]
             url = ref.metadata["url"]
-            anchors.append(f"- <{title}|{url}>")
+            anchors.append(f"• <{url}|{title}>")
         anchor_text = "\n".join(anchors)
         return {"type": "section", "text": {"type": "mrkdwn", "text": anchor_text}}
 
