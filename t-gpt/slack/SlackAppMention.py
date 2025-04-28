@@ -86,7 +86,7 @@ class SlackAppMention(Base):
             >>>             help_message()[1],
             >>>             help_message()[2]
             >>>         ]
-            )
+            >>> )
         """
 
         message0 = f"対応しているデータセットは{",".join(self.dataset_yaml)}になります。質問は以下の形式で質問してください。\n"
