@@ -2,7 +2,7 @@ import os
 
 from slack_bolt import App
 
-from ..gemini.CreateGeminiIndex import CreateGeminiIndex
+from ..gemini.AskGemini import AskGemini
 from ..slack.SlackAppMention import SlackAppMention
 
 """Slackから返ってきたイベントに対して色々反応する関数たち
@@ -83,10 +83,10 @@ def handle_message_events(event, say):
                 thread_ts=slack_app_mention.thread_ts,
             )
             return
-        create_gemini_index = CreateGeminiIndex()
+        gemini = AskGemini()
         # 質問を改行してくるかもしれないので結合してあげる。
         question = "".join(lines[1:])
-        answer = create_gemini_index.ask_question(dataset_name, question)
+        answer = gemini.query(dataset_name, question)
         say(
             text=str(answer),
             blocks=[
