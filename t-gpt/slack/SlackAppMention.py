@@ -8,20 +8,30 @@ from ..base.Base import Base
 
 class SlackAppMention(Base):
     """Slackで返信する時に使うクラス
+    各メソッドやメンバ変数を使う前にコンストラクタ->イニシャライザで初期化して使うことを想定している
 
     Params:
-        event: Slackから返ってきたEvent。中に色々情報が詰まってる
+        user(str): メンションしてきたユーザ
+        text(str): ユーザが送ってきたメッセージ
+        thread_ts(str): スレ中でのメンションならその中に、新規だったらそのメンションの中にスレを作る
     """
 
-    def __init__(self, event) -> None:
-        """Slackで返信する時に使うクラス
+    def __init__(self, file) -> None:
+        """コンストラクタ
 
         Attributes:
-            user(str): メンションしてきたユーザ
-            text(str): ユーザが送ってきたメッセージ
-            thread_ts(str): スレ中でのメンションならその中に、新規だったらそのメンションの中にスレを作る
+            file(str): 実行するファイルのパス
         """
-        super().__init__(__file__)
+        super().__init__(file)
+
+    def initialize(self, event) -> None:
+        """イニシャライザ
+        コンストラクタはslack_boltを使うために一度環境変数を読み込ませる。
+        イニシャライザでは、Slackからメンションされた時に呼び出される変数をセットする。
+        Attributes:
+            event: Slackから返ってきたEvent。中に色々情報が詰まってる
+        """
+        self.event = event
         self.user = event.get("user")
         self.text = event.get("text")
         self.thread_ts = event.get("thread_ts") or event.get("ts")
