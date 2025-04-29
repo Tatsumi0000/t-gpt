@@ -25,6 +25,7 @@ docker compose up
 docker-composeを立ち上げたら`loalhost:4040`にブラウザでアクセスし、`表示されたURL/slack/events`をSlackの管理画面にある`Event Subscriptions`の`Request URL`にURLを指定します。
 正しく起動できていれば`Verified`になります。
 
+ngrokのコンテナを立ち上げるたびにproxyするURLが変わるので基本的にはngrokのコンテナは立ち上げっぱなしがおすすめです。
 
 ### Slackの設定
 Slackのトークンを取得してenvにセットする必要があります。
