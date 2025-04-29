@@ -131,7 +131,7 @@ class SlackAppMention(Base):
         """メッセージの最後にいれるフッターを返す。
 
         Returns:
-            タプル形式で返す。最初に区切り線で、最後にメッセージ
+            Listで返す。最初に区切り線で最後にメッセージ
         """
         url = "https://github.com/Tatsumi0000/t-gpt/"
         return [
