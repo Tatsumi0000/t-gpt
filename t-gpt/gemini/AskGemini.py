@@ -1,9 +1,6 @@
 from llama_index.core import StorageContext, load_index_from_storage
 from llama_index.core.base.response.schema import RESPONSE_TYPE
-from llama_index.core.bridge.langchain import PromptTemplate
-from llama_index.core.prompts import ChatPromptTemplate
 
-from ..base.Base import is_development
 from .GeminiBase import GeminiBase
 
 
@@ -37,14 +34,12 @@ class AskGemini(GeminiBase):
             >>>     print(f'{ans.metadata["title"]}: {ans.metadata["url"]}')
 
         """
-
-        if is_development:
-            storage_context = StorageContext.from_defaults(
-                persist_dir=self.save_index_file_dir_path(dataset_name)
-            )
-            index = load_index_from_storage(storage_context)
-            query_engine = index.as_query_engine()
-            return query_engine.query(question)
+        storage_context = StorageContext.from_defaults(
+            persist_dir=self.save_index_file_dir_path(dataset_name)
+        )
+        index = load_index_from_storage(storage_context)
+        query_engine = index.as_query_engine()
+        return query_engine.query(question)
 
     def prompt_tuning(self):
         """Geminiに問い合わせるためのプロンプトをカスタマイズ

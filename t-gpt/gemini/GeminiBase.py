@@ -30,6 +30,7 @@ class GeminiBase(Base):
         super().__init__(file)
         self.llm_model = llm_model
         self.embed_model = embed_model
+        self.setup_gemini()
 
     def setup_gemini(self) -> None:
         """使用するGeminiのモデルを設定する"""

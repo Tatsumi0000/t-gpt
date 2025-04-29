@@ -22,7 +22,7 @@ class CreateGeminiIndex(GeminiBase):
     ):
         """コンストラクタ"""
         super().__init__(__file__)
-        self.setup_gemini()
+        # self.setup_gemini()
 
     def create_and_save_index(self) -> None:
         """LLMに渡すために文書のindex化&保存。
