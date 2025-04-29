@@ -42,6 +42,6 @@ class LoadConfluenceDocument(Base):
 
 
 if __name__ == "__main__":
-    load = LoadConfluenceDocument('android')
+    load = LoadConfluenceDocument("android")
     docs = load.load_data()
     print(docs)
