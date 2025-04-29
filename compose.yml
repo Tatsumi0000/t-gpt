@@ -1,0 +1,23 @@
+
+services:
+  app:
+    image: t-gpt
+    working_dir: /usr/src/app/t-gpt
+    command: 'poetry run python -m t-gpt.slack.event_handler'
+    volumes:
+      - ./:/usr/src/app/t-gpt
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ngrok
+  
+  ngrok:
+    image: ngrok/ngrok:latest
+    command:
+      - "http"
+      - "http://host.docker.internal:8080"
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    ports:
+      - 4040:4040
+

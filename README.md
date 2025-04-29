@@ -47,7 +47,7 @@ CONFLUENCE_BASE_URL='コンフルエンスのURL（~~~/wikiまでを記入）'
 CONFLUENCE_USERNAME='コンフルエンスのユーザ名（データを取得するために必要）'
 CONFLUENCE_PASSWORD='コンフルエンスのAPI_KEY（Atlassianの管理画面から取る）'
 SLACK_BOT_TOKEN='xoxb-で始まるSlackキー'
-SLACK_SIGNING_SECRET='Slackの管理画面にあるSiging Secretの値'
+SLACK_SIGNING_SECRET='Slackの管理画面にあるSigning Secretの値'
 ```
 
 ## yaml
